@@ -1,0 +1,257 @@
+/* components.module.css */
+
+.formGroup {
+  margin-bottom: 1.25rem;
+}
+
+.label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.input, .select {
+  width: 100%;
+  padding: 0.75rem;
+  border-radius: 6px;
+  background-color: #0f1115;
+  border: 1px solid var(--border);
+  color: var(--foreground);
+  font-size: 1rem;
+}
+
+.input:focus, .select:focus {
+  outline: none;
+  border-color: var(--primary);
+}
+
+.button {
+  width: 100%;
+  padding: 0.75rem;
+  background-color: var(--primary);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.button:hover:not(:disabled) {
+  background-color: var(--primary-hover);
+}
+
+.button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.error {
+  color: var(--error);
+  font-size: 0.875rem;
+  margin-top: 1rem;
+}
+
+.success {
+  color: var(--success);
+  font-size: 0.875rem;
+  margin-top: 1rem;
+}
+
+/* Job Poller Styles */
+.jobList {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.jobCard {
+  background-color: #0f1115;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem;
+}
+
+.jobHeader {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+  font-size: 0.875rem;
+}
+
+.jobType {
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+.jobStatus {
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  text-transform: uppercase;
+}
+
+.status-pending { background-color: #475569; color: white; }
+.status-processing { background-color: #eab308; color: black; }
+.status-completed { background-color: var(--success); color: white; }
+.status-failed { background-color: var(--error); color: white; }
+
+.jobTime {
+  font-size: 0.75rem;
+  color: #94a3b8;
+  margin-bottom: 0.75rem;
+}
+
+.jobActions {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.actionBtn {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--foreground);
+  padding: 0.4rem 0.75rem;
+  border-radius: 4px;
+  font-size: 0.875rem;
+  cursor: pointer;
+}
+
+.actionBtn:hover {
+  background: var(--surface);
+}
+
+.actionBtnPrimary {
+  background: var(--primary);
+  border: 1px solid var(--primary);
+  color: white;
+}
+
+.actionBtnPrimary:hover {
+  background: var(--primary-hover);
+}
+
+.actionBtnDanger {
+  background: transparent;
+  border: 1px solid var(--error);
+  color: var(--error);
+}
+
+.actionBtnDanger:hover {
+  background: rgba(239, 68, 68, 0.1);
+}
+
+.emptyState {
+  text-align: center;
+  color: #94a3b8;
+  padding: 2rem 0;
+  font-size: 0.875rem;
+}
+
+/* Log Viewer Styles */
+.logOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 2rem;
+}
+
+.logContainer {
+  width: 100%;
+  max-width: 900px;
+  height: 80vh;
+  background: #000000;
+  border: 1px solid #333;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5);
+  overflow: hidden;
+}
+
+.logHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 1rem;
+  background: #1a1a1a;
+  border-bottom: 1px solid #333;
+}
+
+.logTitle {
+  font-size: 0.875rem;
+  font-family: monospace;
+  color: #ddd;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.terminalIcon {
+  width: 12px;
+  height: 12px;
+  background: #ff5f56;
+  border-radius: 50%;
+  box-shadow: 20px 0 0 #ffbd2e, 40px 0 0 #27c93f;
+}
+
+.statusText {
+  font-weight: bold;
+}
+
+.closeBtn {
+  background: transparent;
+  border: none;
+  color: #888;
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 0;
+  line-height: 1;
+}
+
+.closeBtn:hover {
+  color: white;
+}
+
+.logContent {
+  flex: 1;
+  padding: 1rem;
+  overflow-y: auto;
+  font-family: 'Geist Mono', monospace;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  color: #00ff00; /* Terminal Green */
+}
+
+.logContent::-webkit-scrollbar {
+  width: 8px;
+}
+
+.logContent::-webkit-scrollbar-thumb {
+  background: #333;
+  border-radius: 4px;
+}
+
+.pre {
+  margin: 0;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
+.noLogs {
+  color: #666;
+  font-style: italic;
+  text-align: center;
+  margin-top: 2rem;
+}

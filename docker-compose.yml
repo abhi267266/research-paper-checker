@@ -1,0 +1,105 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: humanizer
+      POSTGRES_PASSWORD: humanizer
+      POSTGRES_DB: humanizer
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  redis:
+    image: redis:7-alpine
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+
+  minio:
+    image: minio/minio:latest
+    restart: unless-stopped
+    command: server /data --console-address ":9001"
+    environment:
+      MINIO_ROOT_USER: minioadmin
+      MINIO_ROOT_PASSWORD: minioadmin
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    volumes:
+      - minio_data:/data
+
+  # MinIO bucket initializer (runs once)
+  minio-init:
+    image: minio/mc:latest
+    depends_on:
+      - minio
+    entrypoint: >
+      /bin/sh -c "
+      sleep 5;
+      mc alias set local http://minio:9000 minioadmin minioadmin;
+      mc mb --ignore-existing local/uploads;
+      mc mb --ignore-existing local/outputs;
+      mc mb --ignore-existing local/codebase;
+      echo 'Buckets ready';
+      "
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    env_file: ./backend/.env
+    ports:
+      - "8000:8000"
+    depends_on:
+      - postgres
+      - redis
+      - minio
+    environment:
+      - DATABASE_URL=postgresql://humanizer:humanizer@postgres:5432/humanizer
+      - REDIS_URL=redis://redis:6379/0
+      - S3_ENDPOINT_URL=http://minio:9000
+    volumes:
+      - ./backend/commands:/app/commands
+      - ./backend/core:/app/core
+      - ./backend/prompts:/app/prompts
+      - ./backend/app:/app/app
+
+  worker:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.worker
+    restart: unless-stopped
+    env_file: ./backend/.env
+    depends_on:
+      - postgres
+      - redis
+      - minio
+    environment:
+      - DATABASE_URL=postgresql://humanizer:humanizer@postgres:5432/humanizer
+      - REDIS_URL=redis://redis:6379/0
+      - S3_ENDPOINT_URL=http://minio:9000
+    volumes:
+      - ./backend/commands:/app/commands
+      - ./backend/core:/app/core
+      - ./backend/prompts:/app/prompts
+      - ./backend/app:/app/app
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    env_file: ./frontend/.env.local
+    environment:
+      - BACKEND_URL=http://backend:8000
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+
+volumes:
+  postgres_data:
+  minio_data:

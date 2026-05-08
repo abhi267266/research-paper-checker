@@ -1,0 +1,13 @@
+[project]
+name = "research-paper-humanizere"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.14"
+dependencies = [
+    "flower>=2.0.1",
+    "litellm>=1.83.14",
+]
+
+[tool.pyright]
+extraPaths = ["backend"]
