@@ -69,8 +69,8 @@ def execute(args):
                 except Exception as e:
                     if retry > 0:
                         retry -= 1
-                        print(f"Rate limit hit. Sleeping 15s. Retries left: {retry}")
-                        time.sleep(15)
+                        print(f"Rate limit hit. Sleeping 65s. Retries left: {retry}")
+                        time.sleep(65)
                     else:
                         print(f"  Warning: Batch scoring failed after retry: {e}")
             
@@ -109,8 +109,8 @@ def execute(args):
                                 except Exception as e:
                                     if h_retry > 0:
                                         h_retry -= 1
-                                        print(f"Humanize rate limit. Sleeping 30s. Retries left: {h_retry}")
-                                        time.sleep(30)
+                                        print(f"Humanize rate limit. Sleeping 65s. Retries left: {h_retry}")
+                                        time.sleep(65)
                                     else:
                                         print(f"  Warning: Humanization failed: {e}")
                     except Exception as e:

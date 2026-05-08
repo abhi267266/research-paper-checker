@@ -44,7 +44,7 @@ def generate_with_fallback(system_prompt, messages, tools=None, model_tier="high
     models_to_try = [
         ACTIVE_MODEL_HIGH,
         "claude-3-5-sonnet-20240620",
-        "gemini/gemini-1.5-pro",
+        "gemini/gemini-pro-latest",
         "groq/llama-3.3-70b-versatile"
     ]
     
